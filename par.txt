@@ -1,0 +1,64 @@
+2️⃣ Run tests by tags
+
+Run only smoke tests:
+
+radish -t smoke features/
+
+
+Run regression tests:
+
+radish -t regression features/
+
+
+Run tests with multiple tags:
+
+# AND condition (must have both tags)
+radish -t regression,negative features/
+
+# OR condition (any tag)
+radish -t "smoke,regression" features/
+
+3️⃣ Run tests in parallel
+
+Use the -p or --parallel option:
+
+# Run all features in 3 parallel processes
+radish -p 3 features/
+
+
+Combine tags + parallel execution:
+
+# Run only regression tests in 3 parallel processes
+radish -t regression -p 3 features/
+==========================
+
+power shell (only report genarating and running to open browser for report)
+
+# -----------------------------
+# PowerShell script for Radish BDD
+# Runs features in parallel and generates Allure report
+# -----------------------------
+
+# 1️⃣ Activate virtual environment
+Write-Host "Activating virtual environment..."
+& .\.venv\Scripts\Activate.ps1
+
+# 2️⃣ Change to project root (optional if already in root)
+Set-Location "C:\Users\nagar\PycharmProjects\selenium_radish_bdd_frameworks"
+
+# 3️⃣ Run Radish in parallel with tags
+Write-Host "Running Radish features in parallel (tags: suite1 OR suite2)..."
+radish -p 2 -t "suite1|suite2" features/
+
+# 4️⃣ Generate Allure report
+Write-Host "Generating Allure report..."
+allure generate allure-results --clean -o allure-report
+
+# 5️⃣ Open Allure report
+Write-Host "Opening Allure report..."
+allure open allure-report
+
+Write-Host "✅ Parallel run + Allure report complete!"
+================
+for check package
+pip freeze > requirements.txt

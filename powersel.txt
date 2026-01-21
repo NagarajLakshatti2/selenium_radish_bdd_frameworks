@@ -1,0 +1,25 @@
+(.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> .\.venv\Scripts\Activate.ps1
+(.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> where python
+(.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> python -m pip show selenium
+Name: selenium
+Version: 4.40.0
+Summary: Official Python bindings for Selenium WebDriver
+Home-page: https://www.selenium.dev
+Author:
+Author-email:
+License: Apache-2.0
+Location: C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks\.venv\Lib\site-packages
+Requires: certifi, trio, trio-typing, trio-websocket, types-certifi, types-urllib3, typing_extensions, urllib3, websocket-client
+Required-by:
+(.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> python -c "from selenium import webdriver; from selenium.webdriver.chrome.options import Options; from webdriver_manager.chrome import ChromeDriverManager; print('ALL IMPORTS OK')"
+ALL IMPORTS OK
+(.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> radish features/
+Feature: Rahul Shetty Academy Homepage  # features/homepage.feature
+
+
+in pycharm
+ powershell.exe -NoExit -Command "& .\.venv\Scripts\Activate.ps1"
+(.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks>
+
+
+radish features/

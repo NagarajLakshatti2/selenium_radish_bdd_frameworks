@@ -1,19 +1,35 @@
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 class DriverManager:
 
     @staticmethod
     def get_driver():
-        options = Options()
+        chrome_options = Options()
 
-        # CI / headless support
+        # ✅ Required for CI / Docker / GitHub Actions
         if os.getenv("CI") == "true":
-            options.add_argument("--headless=new")
-            options.add_argument("--no-sandbox")
-            options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--headless=new")
+            chrome_options.add_argument("--no-sandbox")
+            chrome_options.add_argument("--disable-dev-shm-usage")
 
-        options.add_argument("--start-maximized")
+        # ✅ Common options (local + CI)
+        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument("--disable-notifications")
+        chrome_options.add_argument("--disable-infobars")
+        chrome_options.add_argument("--disable-extensions")
 
-        return webdriver.Chrome(options=options)
+        service = Service(ChromeDriverManager().install())
+
+        driver = webdriver.Chrome(
+            service=service,
+            options=chrome_options
+        )
+
+        driver.implicitly_wait(10)
+        return driver

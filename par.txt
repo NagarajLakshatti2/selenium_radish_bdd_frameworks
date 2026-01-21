@@ -62,3 +62,25 @@ Write-Host "✅ Parallel run + Allure report complete!"
 ================
 for check package
 pip freeze > requirements.txt
+============
+to switch .vnu first time from power shell
+
+
+PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> python -m venv .venv
+PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> .\.venv\Scripts\Activate.ps1
+(.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks>
+
+(.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+pip install --upgrade pip
+pip install -r requirements.txt
+
+ radish --version
+0.17.1
+
+now run
+radish features/
+
+===========
+pip install -r requirements.txt
+

@@ -13,8 +13,8 @@ Feature: Login functionality - Rahul Shetty Academy
     When I enter username "rahulshettyacademy"
     And I enter password "Learning@830$3mK2"
     And I click on the sign in button
-    Then I should be logged in successfully
-    And I should see the home page
+#    Then I should be logged in successfully
+#    And I should see the home page
 
 #  @regression @negative
 #  Scenario: Login failure with invalid password

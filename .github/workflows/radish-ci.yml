@@ -47,7 +47,7 @@ jobs:
       # 7️⃣ Generate Allure Report
       - name: Generate Allure Report
         run: |
-          allure generate allure-results --clean -o allure-report
+          radish features --junit-xml=allure-results/results.xml
 
       # 8️⃣ Publish Allure Report to GitHub Pages
       - name: Deploy Allure Report to GitHub Pages

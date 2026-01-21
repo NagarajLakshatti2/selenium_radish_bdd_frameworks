@@ -59,3 +59,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
           force_orphan: true
+
+      - name: Report URL
+        run:
+          echo "Allure Report: https://nagarajlakshatti2.github.io/selenium_radish_bdd_frameworks/"

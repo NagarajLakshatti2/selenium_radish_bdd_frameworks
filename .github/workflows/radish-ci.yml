@@ -76,10 +76,7 @@ jobs:
     # -------------------------------------------------
     - name: Run Radish tests
       run: |
-        mkdir -p allure-results
-        radish features/ \
-          --listener listeners/radish_allure_listener.py \
-          --junit-xml=allure-results/junit.xml
+        radish features/ --junit-xml=allure-results/junit.xml
 
     # -------------------------------------------------
     # Generate Allure Report

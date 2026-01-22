@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<testsuites time="32.459">
-  <testsuite name="Rahul Shetty Academy Homepage" failures="0" errors="0" skipped="0" tests="1" time="19.508">
-    <testcase classname="Rahul Shetty Academy Homepage" name="Verify homepage title" time="17.098"/>
+<testsuites time="19.512">
+  <testsuite name="Rahul Shetty Academy Homepage" failures="0" errors="0" skipped="0" tests="1" time="9.396">
+    <testcase classname="Rahul Shetty Academy Homepage" name="Verify homepage title" time="7.228"/>
   </testsuite>
-  <testsuite name="Login functionality - Rahul Shetty Academy" failures="0" errors="0" skipped="0" tests="1" time="12.951">
-    <testcase classname="Login functionality - Rahul Shetty Academy" name="Successful login with valid credentials" time="10.687"/>
+  <testsuite name="Login functionality - Rahul Shetty Academy" failures="0" errors="0" skipped="0" tests="1" time="10.116">
+    <testcase classname="Login functionality - Rahul Shetty Academy" name="Successful login with valid credentials" time="7.955"/>
   </testsuite>
 </testsuites>

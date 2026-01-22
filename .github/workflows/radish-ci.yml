@@ -48,7 +48,6 @@ jobs:
       - name: Run Radish tests
         run: |
           radish features \
-            --listener listeners.radish_allure_listener \
             --junit-xml=allure-results/junit.xml \
             --cucumber-json=allure-results/cucumber.json
         env:

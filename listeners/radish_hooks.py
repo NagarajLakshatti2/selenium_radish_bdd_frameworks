@@ -1,42 +1,16 @@
+from radish import after
 import os
-from radish import before, after
+import base64
 
-SCREENSHOT_FOLDER = "screenshots"
-os.makedirs(SCREENSHOT_FOLDER, exist_ok=True)
+@after.each_step
+def attach_screenshot(step):
+    driver = getattr(step.context, "driver", None)
+    if driver:
+        screenshots_dir = "allure-results/screenshots"
+        os.makedirs(screenshots_dir, exist_ok=True)
+        path = os.path.join(screenshots_dir, f"{step.name.replace(' ', '_')}.png")
+        driver.save_screenshot(path)
 
-
-def sanitize_filename(name):
-    return (
-        name.replace(" ", "_")
-            .replace('"', "")
-            .replace("/", "_")
-            .lower()
-    )
-
-
-@before.each_scenario
-def before_scenario(scenario):
-    try:
-        if hasattr(scenario.context, "driver"):
-            filename = os.path.join(
-                SCREENSHOT_FOLDER,
-                f"{sanitize_filename(scenario.sentence)}_start.png"
-            )
-            scenario.context.driver.save_screenshot(filename)
-    except Exception:
-        # ⚠️ hooks must never crash
-        pass
-
-
-@after.each_scenario
-def after_scenario(scenario):
-    try:
-        if hasattr(scenario.context, "driver"):
-            filename = os.path.join(
-                SCREENSHOT_FOLDER,
-                f"{sanitize_filename(scenario.sentence)}_end.png"
-            )
-            scenario.context.driver.save_screenshot(filename)
-    except Exception:
-        # ⚠️ hooks must never crash
-        pass
+        with open(path, "rb") as f:
+            img_base64 = base64.b64encode(f.read()).decode("utf-8")
+        step.attach(img_base64, "image/png", step.name)

@@ -12,6 +12,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     services:
       selenium:
         image: selenium/standalone-chrome:latest
@@ -31,7 +32,9 @@ jobs:
 
       # 3️⃣ Install dependencies
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install allure-commandline
 
       # 4️⃣ Verify Radish
       - name: Verify Radish
@@ -39,44 +42,15 @@ jobs:
           radish --version
           which radish
 
-      # 5️⃣ Run Radish tests (✅ CORRECT WAY)
+      # 5️⃣ Run Radish tests (CORRECT)
       - name: Run Radish tests
         run: |
           radish features \
-            --junit-xml=allure-results/junit.xml \
-
+            --cucumber-json=allure-results/cucumber.json
         env:
           GRID_URL: http://selenium:4444/wd/hub
 
-
-      # 6️⃣ Install Allure CLI
-      - name: Install Chrome & Chromedriver (Correct Way)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget unzip xvfb jq
-
-          # Install Chrome
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
-
-          # Get matching Chromedriver from Chrome for Testing
-          CHROME_MAJOR=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
-
-          DRIVER_URL=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json \
-            | jq -r ".channels.Stable.downloads.chromedriver[] | select(.platform==\"linux64\") | .url")
-
-          wget $DRIVER_URL
-          unzip chromedriver-linux64.zip
-          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
-
-          google-chrome --version
-          chromedriver --version
-      
-      
-      
-
-      # 7️⃣ Generate Allure Report
+      # 6️⃣ Generate Allure Report
       - name: Generate Allure Report
         if: always()
         run: |
@@ -88,7 +62,7 @@ jobs:
 
           cp -r allure-report/history allure-history
 
-      # 8️⃣ Deploy Allure Report
+      # 7️⃣ Deploy Allure Report
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -97,7 +71,7 @@ jobs:
           keep_files: true
           force_orphan: true
 
-      # 9️⃣ Print Report URL
+      # 8️⃣ Print Report URL
       - name: Allure Report URL
         run: |
           echo "::notice title=Allure Report::https://nagarajlakshatti2.github.io/selenium_radish_bdd_frameworks/"

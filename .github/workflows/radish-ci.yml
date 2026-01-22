@@ -50,15 +50,15 @@ jobs:
       # ------------------------------
       # 5️⃣ Install Allure CLI
       # ------------------------------
-      - name: Install Allure CLI
-        run: |
-          sudo apt update
-          sudo apt install -y openjdk-17-jdk wget unzip
-          wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.27.4.zip
-          unzip allure-2.27.4.zip -d allure-cli
-          chmod +x allure-cli/allure-2.27.4/bin/allure
-          sudo mv allure-cli/allure-2.27.4/bin/allure /usr/local/bin/allure
-          allure --version
+#      - name: Install Allure CLI
+#        run: |
+#          sudo apt update
+#          sudo apt install -y openjdk-17-jdk wget unzip
+#          wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.27.4.zip
+#          unzip allure-2.27.4.zip -d allure-cli
+#          chmod +x allure-cli/allure-2.27.4/bin/allure
+#          sudo mv allure-cli/allure-2.27.4/bin/allure /usr/local/bin/allure
+#          allure --version
 
 
       # ------------------------------

@@ -51,7 +51,7 @@ jobs:
       # 5️⃣ Run Radish tests (✅ CORRECT WAY)
       - name: Run Radish BDD tests
         run: |
-          radish features/ \
+          radish features/
           --listener listeners.radish_allure_listener \
           --listener listeners.radish_hooks \
           --listener listeners.allure_tag_listener \

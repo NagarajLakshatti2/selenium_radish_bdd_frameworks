@@ -63,9 +63,9 @@ jobs:
       # ------------------------------
       # 5️⃣ Install Allure CLI
       # ------------------------------
-      - name: Install Allure CLI (npm)
+      - name: Install Allure
         run: |
-          npm install -g allure-commandline --save-dev
+          npm install -g allure-commandline
           allure --version
 
       # ------------------------------
@@ -75,15 +75,18 @@ jobs:
         run: |
           allure generate allure-results --clean -o allure-report
 
+      - name: Verify Allure Report
+        run: |
+          ls -la allure-report
+
       # ------------------------------
       # 7️⃣ Deploy Allure Report to GitHub Pages
       # ------------------------------
-      - name: Deploy Allure Report
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
-          publish_branch: gh-pages
 
       # ------------------------------
       # 8️⃣ Show Allure Report URL

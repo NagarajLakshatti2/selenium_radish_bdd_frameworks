@@ -9,12 +9,14 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 # Now you can safely import utils
-from utils.driver_manager import DriverManager
+# from utils.driver_manager import DriverManager
+from utils.driver_manager import get_driver
+
 
 
 @before.each_scenario
 def start_browser(scenario):
-    scenario.context.driver = DriverManager.get_driver()
+    scenario.context.driver = get_driver()
 
 
 @after.each_scenario

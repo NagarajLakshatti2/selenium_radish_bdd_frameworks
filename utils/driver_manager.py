@@ -1,35 +1,43 @@
 import os
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.edge.service import Service as EdgeService
 
+def get_driver():
+    browser = os.getenv("BROWSER", "chrome").lower()
+    remote = os.getenv("REMOTE", "false").lower() == "true"
+    grid_url = os.getenv("GRID_URL", "http://localhost:4444/wd/hub")
 
-class DriverManager:
+    if browser == "edge":
+        options = EdgeOptions()
+    else:
+        options = ChromeOptions()
 
-    @staticmethod
-    def get_driver():
-        chrome_options = Options()
+    # CI / Headless
+    if os.getenv("CI"):
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
 
-        # ✅ Required for CI / Docker / GitHub Actions
-        if os.getenv("CI") == "true":
-            chrome_options.add_argument("--headless=new")
-            chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--start-maximized")
+    options.add_argument("--disable-notifications")
+    options.add_argument("--disable-infobars")
+    options.add_argument("--disable-extensions")
 
-        # ✅ Common options (local + CI)
-        chrome_options.add_argument("--start-maximized")
-        chrome_options.add_argument("--disable-notifications")
-        chrome_options.add_argument("--disable-infobars")
-        chrome_options.add_argument("--disable-extensions")
-
-        service = Service(ChromeDriverManager().install())
-
-        driver = webdriver.Chrome(
-            service=service,
-            options=chrome_options
+    # -------- Remote Grid --------
+    if remote:
+        driver = webdriver.Remote(
+            command_executor=grid_url,
+            options=options
         )
+    else:
+        if browser == "edge":
+            driver = webdriver.Edge(service=EdgeService(), options=options)
+        else:
+            driver = webdriver.Chrome(service=ChromeService(), options=options)
 
-        driver.implicitly_wait(10)
-        return driver
+    driver.implicitly_wait(10)
+    driver.set_page_load_timeout(30)
+    return driver

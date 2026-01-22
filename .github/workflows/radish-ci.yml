@@ -13,6 +13,18 @@ jobs:
   radish-tests:
     runs-on: ubuntu-24.04
 
+    env:
+      CI: true
+      BROWSER: chrome
+      REMOTE: true
+      GRID_URL: http://selenium:4444/wd/hub
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome
+        ports:
+          - 4444:4444
+
     steps:
       # 1️⃣ Checkout code
       - name: Checkout repository
@@ -24,23 +36,24 @@ jobs:
         with:
           python-version: "3.11"
 
-      # 3️⃣ Install Python dependencies
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install radish-bdd
+          pip install radish-bdd allure-python-commons
 
-      # 4️⃣ Verify Radish installation
+      # 4️⃣ Verify Radish
       - name: Verify Radish
         run: |
           radish --version
           which radish
 
-      # 5️⃣ Run Radish tests with Allure listener
+      # 5️⃣ Run Radish tests (✅ CORRECT WAY)
       - name: Run Radish BDD tests
         run: |
-          radish features --junit-xml=allure-results/results.xml
+          radish features \
+            --listener listeners/radish_allure_listener.py
 
       # 6️⃣ Install Allure CLI
       - name: Install Allure CLI
@@ -49,16 +62,26 @@ jobs:
 
       # 7️⃣ Generate Allure Report
       - name: Generate Allure Report
+        if: always()
         run: |
+          if [ -d allure-history ]; then
+            cp -r allure-history allure-results/history
+          fi
+
           allure generate allure-results --clean -o allure-report
 
-      # 8️⃣ Publish Allure Report to GitHub Pages
+          cp -r allure-report/history allure-history
+
+      # 8️⃣ Deploy Allure Report
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
+          keep_files: true
           force_orphan: true
 
+      # 9️⃣ Print Report URL
       - name: Allure Report URL
-        run: echo "::notice title=Allure Report::https://nagarajlakshatti2.github.io/selenium_radish_bdd_frameworks/"
+        run: |
+          echo "::notice title=Allure Report::https://nagarajlakshatti2.github.io/selenium_radish_bdd_frameworks/"

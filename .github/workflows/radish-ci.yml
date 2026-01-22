@@ -48,19 +48,6 @@ jobs:
         run: ls -R   # <-- This will list all files and folders in the runner
 
       # ------------------------------
-      # 4️⃣ Run Radish tests
-      # ------------------------------
-      - name: Run Radish tests
-        run: |
-          mkdir -p allure-results/screenshots
-          radish features --cucumber-json=allure-results/cucumber.json
-#          radish features --hook listeners/radish_hooks.py --cucumber-json=allure-results/cucumber.json
-        env:
-          GRID_URL: http://selenium:4444/wd/hub
-          BROWSER: chrome
-          RADISH_RETRIES: 2  # optional: set max retries
-
-      # ------------------------------
       # 5️⃣ Install Allure CLI
       # ------------------------------
       - name: Install Allure CLI
@@ -72,6 +59,20 @@ jobs:
           chmod +x allure-cli/allure-2.27.4/bin/allure
           sudo mv allure-cli/allure-2.27.4/bin/allure /usr/local/bin/allure
           allure --version
+
+
+      # ------------------------------
+      # 4️⃣ Run Radish tests
+      # ------------------------------
+      - name: Run Radish tests
+        run: |
+          mkdir -p allure-results/screenshots
+          radish features --cucumber-json=allure-results/cucumber.json
+#          radish features --hook listeners/radish_hooks.py --cucumber-json=allure-results/cucumber.json
+        env:
+          GRID_URL: http://selenium:4444/wd/hub
+          BROWSER: chrome
+          RADISH_RETRIES: 2  # optional: set max retries
 
       # ------------------------------
       # 6️⃣ Generate Allure Report

@@ -10,43 +10,39 @@ on:
     branches: [ main ]
 
 jobs:
-  radish-tests:
-    runs-on: ubuntu-24.04
-
-    env:
-      BROWSER: chrome
-      REMOTE: true
-      GRID_URL: http://selenium:4444/wd/hub
-
+  test:
+    runs-on: ubuntu-latest
     services:
       selenium:
-        image: selenium/standalone-chrome
+        image: selenium/standalone-chrome:latest
         ports:
           - 4444:4444
 
     steps:
       # 1️⃣ Checkout code
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       # 2️⃣ Setup Python
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
       # 3️⃣ Install dependencies
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install radish-bdd allure-python-commons
+        run: pip install -r requirements.txt
 
       # 4️⃣ Verify Radish
       - name: Verify Radish
         run: |
           radish --version
           which radish
+
+      - name: Run tests
+        env:
+          GRID_URL: http://selenium:4444/wd/hub
+        run: radish features/ --listener listeners.radish_allure_listener
 
       # 5️⃣ Run Radish tests (✅ CORRECT WAY)
       - name: Run Radish BDD tests

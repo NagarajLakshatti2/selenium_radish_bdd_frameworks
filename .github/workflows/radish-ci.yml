@@ -11,7 +11,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     services:
       selenium:
@@ -43,11 +43,15 @@ jobs:
         env:
           GRID_URL: http://selenium:4444/wd/hub
 
-      # ✅ CORRECT ALLURE INSTALL
-      - name: Setup Allure CLI
-        uses: qameta/allure-action@v1
-        with:
-          allure-version: 2.25.0
+      # MANUAL ALLURE INSTALL
+      - name: Install Allure CLI
+        run: |
+          ALLURE_VERSION=2.27.0
+          wget https://github.com/allure-framework/allure2/releases/download/$ALLURE_VERSION/allure-$ALLURE_VERSION.tgz
+          tar -zxvf allure-$ALLURE_VERSION.tgz
+          sudo mv allure-$ALLURE_VERSION /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+          allure --version
 
       - name: Generate Allure Report
         if: always()

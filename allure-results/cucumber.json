@@ -14,7 +14,7 @@
                         "line": 5,
                         "name": "Given I open Rahul Shetty Academy homepage",
                         "result": {
-                            "duration": 4181408000,
+                            "duration": 4242514000,
                             "status": "passed"
                         }
                     },
@@ -23,7 +23,7 @@
                         "line": 6,
                         "name": "Then page title should contain \"Rahul Shetty Academy\"",
                         "result": {
-                            "duration": 44245000,
+                            "duration": 62705000,
                             "status": "passed"
                         }
                     }
@@ -51,7 +51,7 @@
         "name": "Rahul Shetty Academy Homepage",
         "tags": [],
         "type": "feature",
-        "uri": "features\\homepage.feature"
+        "uri": "features/homepage.feature"
     },
     {
         "description": "As a registered user\nI want to log in to Rahul Shetty Academy practice site\nSo that I can access the application successfully",
@@ -68,7 +68,7 @@
                         "line": 9,
                         "name": "Given I open the login page",
                         "result": {
-                            "duration": 3971919000,
+                            "duration": 4785717000,
                             "status": "passed"
                         }
                     },
@@ -77,7 +77,7 @@
                         "line": 13,
                         "name": "When I enter username \"rahulshettyacademy\"",
                         "result": {
-                            "duration": 405534000,
+                            "duration": 478568000,
                             "status": "passed"
                         }
                     },
@@ -86,7 +86,7 @@
                         "line": 14,
                         "name": "And I enter password \"Learning@830$3mK2\"",
                         "result": {
-                            "duration": 353053000,
+                            "duration": 457369000,
                             "status": "passed"
                         }
                     },
@@ -95,7 +95,7 @@
                         "line": 15,
                         "name": "And I click on the sign in button",
                         "result": {
-                            "duration": 258363999,
+                            "duration": 394632000,
                             "status": "passed"
                         }
                     }
@@ -123,6 +123,6 @@
         "name": "Login functionality - Rahul Shetty Academy",
         "tags": [],
         "type": "feature",
-        "uri": "features\\loginpage.feature"
+        "uri": "features/loginpage.feature"
     }
 ]

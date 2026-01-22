@@ -7,6 +7,9 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: write   # ✅ REQUIRED for gh-pages
+
 jobs:
   radish-tests:
     runs-on: ubuntu-24.04
@@ -53,8 +56,10 @@ jobs:
       - name: Run Radish tests
         run: |
           mkdir -p allure-results/screenshots
-          radish features --cucumber-json=allure-results/cucumber.json
-#          radish features --hook listeners/radish_hooks.py --cucumber-json=allure-results/cucumber.json
+          radish features \
+          --hook listeners.radish_hooks \
+          --cucumber-json=allure-results/cucumber.json
+
         env:
           GRID_URL: http://selenium:4444/wd/hub
           BROWSER: chrome
@@ -83,10 +88,12 @@ jobs:
       # 7️⃣ Deploy Allure Report to GitHub Pages
       # ------------------------------
       - name: Deploy to GitHub Pages
+        if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+          publish_dir: allure-report
+          force_orphan: true
 
       # ------------------------------
       # 8️⃣ Show Allure Report URL

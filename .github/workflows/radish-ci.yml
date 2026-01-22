@@ -39,17 +39,12 @@ jobs:
           radish --version
           which radish
 
-      - name: Run tests
-        env:
-          GRID_URL: http://selenium:4444/wd/hub
-        run: radish features/ --listener listeners.radish_allure_listener
-
       # 5️⃣ Run Radish tests (✅ CORRECT WAY)
       - name: Run Radish tests
         run: |
           radish features \
             --junit-xml=allure-results/junit.xml \
-            --cucumber-json=allure-results/cucumber.json
+
         env:
           GRID_URL: http://selenium:4444/wd/hub
 

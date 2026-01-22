@@ -33,7 +33,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install allure-pytest  # required for allure CLI Python integration
+          pip install allure-radish  # required for allure CLI Python integration
 
       # ------------------------------
       # 4️⃣ Run Radish tests
@@ -50,8 +50,15 @@ jobs:
       # ------------------------------
       # 5️⃣ Install Allure CLI
       # ------------------------------
-      - name: Setup Allure CLI
-        uses: qameta/allure-commandline@v2.15.0  # ✅ stable fork/version
+      - name: Install Allure CLI
+        run: |
+          sudo apt update
+          sudo apt install -y openjdk-17-jdk wget unzip
+          wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.27.4.zip
+          unzip allure-2.27.4.zip -d allure-cli
+          chmod +x allure-cli/allure-2.27.4/bin/allure
+          sudo mv allure-cli/allure-2.27.4/bin/allure /usr/local/bin/allure
+          allure --version
 
       # ------------------------------
       # 6️⃣ Generate Allure Report

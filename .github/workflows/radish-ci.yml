@@ -68,7 +68,7 @@ jobs:
         run: |
           mkdir -p allure-results/screenshots
           radish features --cucumber-json=allure-results/cucumber.json
-#          radish features --hook listeners/radish_hooks.py --cucumber-json=allure-results/cucumber.json
+
         env:
           GRID_URL: http://selenium:4444/wd/hub
           BROWSER: chrome

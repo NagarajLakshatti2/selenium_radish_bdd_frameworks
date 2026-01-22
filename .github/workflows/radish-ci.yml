@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-24.04
 
     env:
-      CI: true
       BROWSER: chrome
       REMOTE: true
       GRID_URL: http://selenium:4444/wd/hub
@@ -56,11 +55,17 @@ jobs:
           --listener listeners.radish_allure_listener \
           --listener listeners.radish_hooks \
           --listener listeners.allure_tag_listener \
+          --junit-xml=allure-results/junit.xml \
+          --cucumber-json=allure-results/cucumber.json
 
       # 6️⃣ Install Allure CLI
       - name: Install Allure CLI
         run: |
-          npm install -g allure-commandline
+          sudo apt-add-repository ppa:qameta/allure -y
+          sudo apt-get update
+          sudo apt-get install allure -y
+          
+      
 
       # 7️⃣ Generate Allure Report
       - name: Generate Allure Report

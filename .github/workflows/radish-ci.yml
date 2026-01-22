@@ -51,7 +51,7 @@ jobs:
       # 5️⃣ Install Allure CLI
       # ------------------------------
       - name: Setup Allure CLI
-        uses: allure-framework/setup-allure@v2
+        uses: qameta/allure-commandline@v2.15.0  # ✅ stable fork/version
 
       # ------------------------------
       # 6️⃣ Generate Allure Report
@@ -65,7 +65,7 @@ jobs:
       # 7️⃣ Deploy Allure Report to GitHub Pages
       # ------------------------------
       - name: Deploy Allure Report
-        uses: peaceiris/actions-gh-pages@v6
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report

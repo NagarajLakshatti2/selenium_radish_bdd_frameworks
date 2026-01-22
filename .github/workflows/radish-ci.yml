@@ -52,11 +52,12 @@ jobs:
       # 5️⃣ Run Radish tests (✅ CORRECT WAY)
       - name: Run Radish BDD tests
         run: |
-          radish features \
-            --listener listeners/radish_allure_listener.py
-            --listener listeners/radish_hooks.py
-            --listener listeners/allure_tag_listener.py
-            --listener listeners/allure_environment_listener.py
+          radish features/ \
+          --listener listeners.radish_allure_listener \
+          --listener listeners.radish_hooks \
+          --listener listeners.allure_tag_listener \
+          --listener listeners.allure_environment_listener
+
 
       # 6️⃣ Install Allure CLI
       - name: Install Allure CLI

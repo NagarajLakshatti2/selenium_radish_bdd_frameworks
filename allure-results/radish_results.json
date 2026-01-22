@@ -1,0 +1,128 @@
+[
+    {
+        "description": "",
+        "elements": [
+            {
+                "description": "",
+                "id": "1",
+                "keyword": "Scenario",
+                "line": 4,
+                "name": "Verify homepage title",
+                "steps": [
+                    {
+                        "keyword": "Given",
+                        "line": 5,
+                        "name": "Given I open Rahul Shetty Academy homepage",
+                        "result": {
+                            "duration": 8921370000,
+                            "status": "passed"
+                        }
+                    },
+                    {
+                        "keyword": "Then",
+                        "line": 6,
+                        "name": "Then page title should contain \"Rahul Shetty Academy\"",
+                        "result": {
+                            "duration": 59086000,
+                            "status": "passed"
+                        }
+                    }
+                ],
+                "tags": [
+                    {
+                        "line": 1,
+                        "name": "@smoke"
+                    },
+                    {
+                        "line": 2,
+                        "name": "@positive"
+                    },
+                    {
+                        "line": 3,
+                        "name": "@suite1"
+                    }
+                ],
+                "type": "scenario"
+            }
+        ],
+        "id": "1",
+        "keyword": "Feature",
+        "line": 1,
+        "name": "Rahul Shetty Academy Homepage",
+        "tags": [],
+        "type": "feature",
+        "uri": "features/homepage.feature"
+    },
+    {
+        "description": "As a registered user\nI want to log in to Rahul Shetty Academy practice site\nSo that I can access the application successfully",
+        "elements": [
+            {
+                "description": "",
+                "id": "1",
+                "keyword": "Scenario",
+                "line": 12,
+                "name": "Successful login with valid credentials",
+                "steps": [
+                    {
+                        "keyword": "Given",
+                        "line": 9,
+                        "name": "Given I open the login page",
+                        "result": {
+                            "duration": 5656075000,
+                            "status": "passed"
+                        }
+                    },
+                    {
+                        "keyword": "When",
+                        "line": 13,
+                        "name": "When I enter username \"rahulshettyacademy\"",
+                        "result": {
+                            "duration": 469854000,
+                            "status": "passed"
+                        }
+                    },
+                    {
+                        "keyword": "And",
+                        "line": 14,
+                        "name": "And I enter password \"Learning@830$3mK2\"",
+                        "result": {
+                            "duration": 453313000,
+                            "status": "passed"
+                        }
+                    },
+                    {
+                        "keyword": "And",
+                        "line": 15,
+                        "name": "And I click on the sign in button",
+                        "result": {
+                            "duration": 397752000,
+                            "status": "passed"
+                        }
+                    }
+                ],
+                "tags": [
+                    {
+                        "line": 9,
+                        "name": "@smoke"
+                    },
+                    {
+                        "line": 10,
+                        "name": "@positive"
+                    },
+                    {
+                        "line": 11,
+                        "name": "@suite2"
+                    }
+                ],
+                "type": "scenario"
+            }
+        ],
+        "id": "2",
+        "keyword": "Feature",
+        "line": 1,
+        "name": "Login functionality - Rahul Shetty Academy",
+        "tags": [],
+        "type": "feature",
+        "uri": "features/loginpage.feature"
+    }
+]

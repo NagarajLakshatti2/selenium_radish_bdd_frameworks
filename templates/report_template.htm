@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Radish Test Report</title>
+    <style>
+        body { font-family: sans-serif; }
+        .scenario { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; }
+        .step.passed { color: green; }
+        .step.failed { color: red; }
+    </style>
+</head>
+<body>
+<h1>Radish Test Report</h1>
+
+{% for scenario in scenarios %}
+<div class="scenario">
+    <h2>{{ scenario['name'] }}</h2>
+    {% for step in scenario['steps'] %}
+    <div class="step {{ step['result']['status'] }}">
+        {{ step['keyword'] }} {{ step['name'] }} - {{ step['result']['status'] }}
+        ({{ '%.2f' % (step['result']['duration'] / 1e9) }} s)
+        {% set screenshot = step.get('screenshot_path', step['name'].replace(' ', '_') + '.png') %}
+        {% if screenshot in screenshots %}
+            - <a href="{{ screenshot }}" target="_blank">Screenshot</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endfor %}
+
+</body>
+</html>

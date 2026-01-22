@@ -1,4 +1,37 @@
+import os
+import json
+import subprocess
+import sys
+import webbrowser
 
+from jinja2 import Template
+from datetime import datetime
+
+# === CONFIGURATION ===
+RADISH_JSON_PATH = "allure-results/radish_results.json"
+OUTPUT_HTML_PATH = "allure-report/index.html"
+SCREENSHOT_FOLDER = "screenshots"
+INCLUDE_PASS_SCREENSHOT = True  # Set False if you don't want screenshots for passed steps
+
+# === UTILS ===
+def load_results(json_path):
+    with open(json_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def get_step_badge(step):
+    return {"passed":"✅","failed":"❌","skipped":"⚠"}.get(step.get("result", {}).get("status"), "❔")
+
+def find_screenshots(step_name):
+    base_name = step_name.replace(" ", "_").lower()
+    before = os.path.join(SCREENSHOT_FOLDER, f"{base_name}_before.png")
+    after = os.path.join(SCREENSHOT_FOLDER, f"{base_name}_after.png")
+    return (before if os.path.exists(before) else None,
+            after if os.path.exists(after) else None)
+
+
+# === REPORT GENERATION ===
+def generate_report(data):
+    TEMPLATE_HTML = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,31 +78,19 @@ h3 { margin-top:0; }
   </div>
   <h2>Features</h2>
   <ul>
-  
+  {% for feature in data %}
       <li class="feature collapsed">
-          <span class="feature-title" onclick="toggleFeature('0')">Rahul Shetty Academy Homepage</span>
-          <ul class="scenario-list" id="feature-0" style="display:none;">
-          
-              <li class="scenario collapsed" 
-                  onclick="scrollToScenario('scenario-Rahul Shetty Academy Homepage-0', event)">
-                  Verify homepage title
+          <span class="feature-title" onclick="toggleFeature('{{loop.index0}}')">{{feature['name']}}</span>
+          <ul class="scenario-list" id="feature-{{loop.index0}}" style="display:none;">
+          {% for scenario in feature['scenarios'] %}
+              <li class="scenario {% if scenario.status=='passed' %}collapsed{% else %}expanded{% endif %}" 
+                  onclick="scrollToScenario('scenario-{{feature['name']}}-{{loop.index0}}', event)">
+                  {{scenario['name']}}
               </li>
-          
+          {% endfor %}
           </ul>
       </li>
-  
-      <li class="feature collapsed">
-          <span class="feature-title" onclick="toggleFeature('1')">Login functionality - Rahul Shetty Academy</span>
-          <ul class="scenario-list" id="feature-1" style="display:none;">
-          
-              <li class="scenario collapsed" 
-                  onclick="scrollToScenario('scenario-Login functionality - Rahul Shetty Academy-0', event)">
-                  Successful login with valid credentials
-              </li>
-          
-          </ul>
-      </li>
-  
+  {% endfor %}
   </ul>
 </div>
 
@@ -103,83 +124,62 @@ h3 { margin-top:0; }
   <div class="chart-box"><canvas id="scenarioChart" height="200"></canvas></div>
 </div>
 
+{% for feature in data %}
+    <h2>{{feature['name']}}</h2>
+    {% for scenario in feature['scenarios'] %}
+    <div class="card" id="scenario-{{feature['name']}}-{{loop.index0}}" data-status="{{scenario.status}}">
+        <h3>{{scenario['name']}}</h3>
+        {% for step in scenario['steps'] %}
+        <div class="step">
+            <span>{{get_step_badge(step)}} {{step['name']}}</span>
+            <div class="tooltip">
+                Status: {{step.result.status}}<br>
+                {% if step.result.error_message %}Error: {{step.result.error_message}}<br>{% endif %}
+                Time: {{step.timestamp}}
+            </div>
+            {% if step.screenshot_before or step.screenshot_after %}
+            <div class="slider-container" id="slider-{{feature['name']}}-{{loop.index0}}-{{loop.index0}}"></div>
+            <script>
+            window.addEventListener('load', function() {
+                var slider = document.getElementById('slider-{{feature['name']}}-{{loop.index0}}-{{loop.index0}}');
+                if(slider && !slider.hasChildNodes()){
+                    var container = document.createElement('div');
+                    container.style.position = 'relative';
+                    container.style.width = '200px';
+                    container.style.height = '60px';
+                    {% if step.screenshot_before %}
+                    var before = document.createElement('img');
+                    before.src = '{{step.screenshot_before}}';
+                    before.style.width='100%';
+                    before.style.position='absolute';
+                    container.appendChild(before);
+                    {% endif %}
+                    {% if step.screenshot_after %}
+                    var after = document.createElement('img');
+                    after.src = '{{step.screenshot_after}}';
+                    after.style.width='100%';
+                    after.style.position='absolute';
+                    after.style.clip='rect(0px, 100%, 60px, 0px)';
+                    container.appendChild(after);
 
-    <h2>Rahul Shetty Academy Homepage</h2>
-    
-    <div class="card" id="scenario-Rahul Shetty Academy Homepage-0" data-status="passed">
-        <h3>Verify homepage title</h3>
-        
-        <div class="step">
-            <span>✅ Given I open Rahul Shetty Academy homepage</span>
-            <div class="tooltip">
-                Status: passed<br>
-                
-                Time: 2026-01-23 00:23:42
-            </div>
-            
+                    var range = document.createElement('input');
+                    range.type='range'; range.min=0; range.max=200; range.value=100;
+                    range.style.width='100%';
+                    range.oninput = function(){ 
+                        after.style.clip = 'rect(0px,'+this.value+'px,60px,0px)'; 
+                    }
+                    container.appendChild(range);
+                    {% endif %}
+                    slider.appendChild(container);
+                }
+            });
+            </script>
+            {% endif %}
         </div>
-        
-        <div class="step">
-            <span>✅ Then page title should contain "Rahul Shetty Academy"</span>
-            <div class="tooltip">
-                Status: passed<br>
-                
-                Time: 2026-01-23 00:23:42
-            </div>
-            
-        </div>
-        
+        {% endfor %}
     </div>
-    
-
-    <h2>Login functionality - Rahul Shetty Academy</h2>
-    
-    <div class="card" id="scenario-Login functionality - Rahul Shetty Academy-0" data-status="passed">
-        <h3>Successful login with valid credentials</h3>
-        
-        <div class="step">
-            <span>✅ Given I open the login page</span>
-            <div class="tooltip">
-                Status: passed<br>
-                
-                Time: 2026-01-23 00:23:42
-            </div>
-            
-        </div>
-        
-        <div class="step">
-            <span>✅ When I enter username "rahulshettyacademy"</span>
-            <div class="tooltip">
-                Status: passed<br>
-                
-                Time: 2026-01-23 00:23:42
-            </div>
-            
-        </div>
-        
-        <div class="step">
-            <span>✅ And I enter password "Learning@830$3mK2"</span>
-            <div class="tooltip">
-                Status: passed<br>
-                
-                Time: 2026-01-23 00:23:42
-            </div>
-            
-        </div>
-        
-        <div class="step">
-            <span>✅ And I click on the sign in button</span>
-            <div class="tooltip">
-                Status: passed<br>
-                
-                Time: 2026-01-23 00:23:42
-            </div>
-            
-        </div>
-        
-    </div>
-    
-
+    {% endfor %}
+{% endfor %}
 </div>
 
 <script>
@@ -198,7 +198,7 @@ window.addEventListener('load', function(){
 });
 
 // === Charts & Filters ===
-var allCards = [{'name': 'Rahul Shetty Academy Homepage', 'scenarios': [{'name': 'Verify homepage title', 'steps': [{'name': 'Given I open Rahul Shetty Academy homepage', 'result': {'status': 'passed', 'error_message': None}, 'screenshot_before': None, 'screenshot_after': None, 'timestamp': '2026-01-23 00:23:42'}, {'name': 'Then page title should contain "Rahul Shetty Academy"', 'result': {'status': 'passed', 'error_message': None}, 'screenshot_before': None, 'screenshot_after': None, 'timestamp': '2026-01-23 00:23:42'}], 'passed_steps': 2, 'failed_steps': 0, 'skipped_steps': 0, 'status': 'passed'}]}, {'name': 'Login functionality - Rahul Shetty Academy', 'scenarios': [{'name': 'Successful login with valid credentials', 'steps': [{'name': 'Given I open the login page', 'result': {'status': 'passed', 'error_message': None}, 'screenshot_before': None, 'screenshot_after': None, 'timestamp': '2026-01-23 00:23:42'}, {'name': 'When I enter username "rahulshettyacademy"', 'result': {'status': 'passed', 'error_message': None}, 'screenshot_before': None, 'screenshot_after': None, 'timestamp': '2026-01-23 00:23:42'}, {'name': 'And I enter password "Learning@830$3mK2"', 'result': {'status': 'passed', 'error_message': None}, 'screenshot_before': None, 'screenshot_after': None, 'timestamp': '2026-01-23 00:23:42'}, {'name': 'And I click on the sign in button', 'result': {'status': 'passed', 'error_message': None}, 'screenshot_before': None, 'screenshot_after': None, 'timestamp': '2026-01-23 00:23:42'}], 'passed_steps': 4, 'failed_steps': 0, 'skipped_steps': 0, 'status': 'passed'}]}];
+var allCards = {{ data | safe }};
 function getChartData(status){
     var passed=0, failed=0, skipped=0; var labels=[], pData=[], fData=[], sData=[];
     allCards.forEach(f=>{ f.scenarios.forEach(s=>{
@@ -258,3 +258,50 @@ document.getElementById('searchBox').addEventListener('input', function(){
 </script>
 </body>
 </html>
+"""
+    template = Template(TEMPLATE_HTML)
+    return template.render(data=data, get_step_badge=get_step_badge)
+
+# === MAIN ===
+if __name__ == "__main__":
+    raw = load_results(RADISH_JSON_PATH)
+    features = []
+    for feature_json in raw:
+        feature = {"name": feature_json.get("name"), "scenarios": []}
+        for scenario_json in feature_json.get("elements", []):
+            if scenario_json.get("type")!="scenario": continue
+            scenario = {"name": scenario_json.get("name"), "steps":[], "passed_steps":0,"failed_steps":0,"skipped_steps":0}
+            scenario_status="passed"
+            for step_json in scenario_json.get("steps", []):
+                status = step_json.get("result", {}).get("status")
+                if status=="failed": scenario_status="failed"
+                elif status=="skipped" and scenario_status!="failed": scenario_status="skipped"
+            scenario["status"]=scenario_status
+            for step_json in scenario_json.get("steps", []):
+                step_name = step_json.get("name")
+                before, after = find_screenshots(step_name)
+                if step_json.get("result", {}).get("status")=="passed" and not INCLUDE_PASS_SCREENSHOT: before=after=None
+                timestamp=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                step = {"name":step_name,
+                        "result":{"status":step_json.get("result",{}).get("status"),
+                                  "error_message":step_json.get("result",{}).get("error_message")},
+                        "screenshot_before":before,
+                        "screenshot_after":after,
+                        "timestamp":timestamp}
+                if step["result"]["status"]=="passed": scenario["passed_steps"]+=1
+                elif step["result"]["status"]=="failed": scenario["failed_steps"]+=1
+                elif step["result"]["status"]=="skipped": scenario["skipped_steps"]+=1
+                scenario["steps"].append(step)
+            feature["scenarios"].append(scenario)
+        features.append(feature)
+
+    os.makedirs(os.path.dirname(OUTPUT_HTML_PATH), exist_ok=True)
+    html = generate_report(features)
+    with open(OUTPUT_HTML_PATH,"w",encoding="utf-8") as f:
+        f.write(html)
+    print(f"✅ Modern Allure-style report generated at {OUTPUT_HTML_PATH}")
+
+    # === Auto open in default browser ===
+    abs_path = os.path.abspath(OUTPUT_HTML_PATH)
+    webbrowser.open(f"file:///{abs_path}")
+    print(f"🌐 Opening report in browser: {abs_path}")

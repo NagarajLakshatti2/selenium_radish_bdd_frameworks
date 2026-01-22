@@ -1,36 +1,51 @@
+radish features/ --junit-xml=allure-results/junit.xml
+python run_full_report.py
+start allure-report/index.html
+
+alternativly
+run this
+run_tests.py
+
+output: custom allur bdd report will open have some issue chart
+
+==============================================
+
+just run this
+ python run_allure_radish.py
+ script executed at the end allure report created and oppened but test body is emepty is know issue in radish bdd
+
+python -c "import listeners.radish_allure_listener"
+radish features/ --junit-xml=allure-results/junit.xml
+====================================================
+
+at project root for power shell
+.\.venv\Scripts\Activate.ps1
+where python
+python -m pip show selenium
+python -c "from selenium import webdriver; from selenium.webdriver.chrome.options import Options; from webdriver_manager.chrome import ChromeDriverManager; print('ALL IMPORTS OK')"
+ALL IMPORTS OK
+
+then start run
+radish features/
+
+in pycharm
+ powershell.exe -NoExit -Command "& .\.venv\Scripts\Activate.ps1"
+(.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks>
+
+then start run
+radish features/
+====================================
+
+tags and p run
 2️⃣ Run tests by tags
-
 Run only smoke tests:
-
 radish -t smoke features/
 
-
-Run regression tests:
-
-radish -t regression features/
-
-
-Run tests with multiple tags:
-
-# AND condition (must have both tags)
-radish -t regression,negative features/
-
-# OR condition (any tag)
-radish -t "smoke,regression" features/
-
 3️⃣ Run tests in parallel
-
 Use the -p or --parallel option:
-
 # Run all features in 3 parallel processes
 radish -p 3 features/
-
-
-Combine tags + parallel execution:
-
-# Run only regression tests in 3 parallel processes
-radish -t regression -p 3 features/
-==========================
+=======================
 
 power shell (only report genarating and running to open browser for report)
 
@@ -59,13 +74,18 @@ Write-Host "Opening Allure report..."
 allure open allure-report
 
 Write-Host "✅ Parallel run + Allure report complete!"
+
 ================
-for check package
+
+===========
+first time
+pip install -r requirements.txt
+
+for check package and after or before update
 pip freeze > requirements.txt
-============
-to switch .vnu first time from power shell
 
-
+===========================
+ reconfigur and to switch .vnu first time from power shell
 PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> python -m venv .venv
 PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks> .\.venv\Scripts\Activate.ps1
 (.venv) PS C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks>
@@ -81,6 +101,4 @@ pip install -r requirements.txt
 now run
 radish features/
 
-===========
-pip install -r requirements.txt
 

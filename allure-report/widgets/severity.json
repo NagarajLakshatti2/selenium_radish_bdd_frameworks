@@ -1,1 +1,1 @@
-[{"uid":"1e1ccb1c537d2514","name":"Verify homepage title","time":{"duration":10873},"status":"passed","severity":"normal"}]
+[{"uid":"950db38462470fb1","name":"Verify homepage title","time":{"duration":9299},"status":"passed","severity":"normal"},{"uid":"e1bf2c6eb095af71","name":"Successful login with valid credentials","time":{"duration":9493},"status":"passed","severity":"normal"}]

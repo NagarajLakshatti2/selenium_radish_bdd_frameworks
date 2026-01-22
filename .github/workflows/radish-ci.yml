@@ -54,6 +54,9 @@ jobs:
         run: |
           radish features \
             --listener listeners/radish_allure_listener.py
+            --listener listeners/radish_hooks.py
+            --listener listeners/allure_tag_listener.py
+            --listener listeners/allure_environment_listener.py
 
       # 6️⃣ Install Allure CLI
       - name: Install Allure CLI

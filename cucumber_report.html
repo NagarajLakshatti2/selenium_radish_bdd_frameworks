@@ -1,0 +1,107 @@
+
+<html>
+<head>
+    <title>Cucumber Report</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .feature { margin-bottom: 40px; }
+        .scenario { margin-left: 20px; margin-bottom: 25px; }
+        .step { margin-left: 40px; margin-bottom: 5px; }
+        .passed { color: green; }
+        .failed { color: red; font-weight: bold; }
+        .skipped { color: orange; }
+        .tags { font-size: 0.9em; color: #555; margin-bottom: 5px; }
+        h1, h2, h3 { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Cucumber Report</h1>
+    
+    <div class="feature">
+        <h2>Feature: Rahul Shetty Academy Homepage</h2>
+        
+        <div class="scenario">
+            <h3>Scenario: Verify homepage title</h3>
+            
+            <div class="tags">
+                Tags: 
+                
+                    @smoke 
+                
+                    @positive 
+                
+                    @suite1 
+                
+            </div>
+            
+            
+            <div class="step passed">
+                Given Given I open Rahul Shetty Academy homepage - passed 
+                (5.03 s)
+                
+                
+            </div>
+            
+            <div class="step passed">
+                Then Then page title should contain "Rahul Shetty Academy" - passed 
+                (0.07 s)
+                
+                
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <div class="feature">
+        <h2>Feature: Login functionality - Rahul Shetty Academy</h2>
+        
+        <div class="scenario">
+            <h3>Scenario: Successful login with valid credentials</h3>
+            
+            <div class="tags">
+                Tags: 
+                
+                    @smoke 
+                
+                    @positive 
+                
+                    @suite2 
+                
+            </div>
+            
+            
+            <div class="step passed">
+                Given Given I open the login page - passed 
+                (5.75 s)
+                
+                
+            </div>
+            
+            <div class="step passed">
+                When When I enter username "rahulshettyacademy" - passed 
+                (0.11 s)
+                
+                
+            </div>
+            
+            <div class="step passed">
+                And And I enter password "Learning@830$3mK2" - passed 
+                (0.14 s)
+                
+                
+            </div>
+            
+            <div class="step passed">
+                And And I click on the sign in button - passed 
+                (0.16 s)
+                
+                
+            </div>
+            
+        </div>
+        
+    </div>
+    
+</body>
+</html>

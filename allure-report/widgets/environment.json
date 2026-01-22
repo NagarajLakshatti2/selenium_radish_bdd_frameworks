@@ -1,1 +1,1 @@
-[]
+[{"values":["Chrome"],"name":"Browser"},{"values":["GitHub Actions"],"name":"Execution"},{"values":["Ubuntu 24.04"],"name":"OS"},{"values":["Radish BDD + Selenium"],"name":"Framework"},{"values":["Selenium Standalone"],"name":"Grid"}]

@@ -1,2 +1,3 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","10873","Verify homepage title","","","passed","","","Rahul Shetty Academy Homepage","Rahul Shetty Academy Homepage",""
+"","9493","Successful login with valid credentials","","","passed","","","Login functionality - Rahul Shetty Academy","Login functionality - Rahul Shetty Academy",""
+"","9299","Verify homepage title","","","passed","","","Rahul Shetty Academy Homepage","Rahul Shetty Academy Homepage",""

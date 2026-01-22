@@ -439,4 +439,39 @@ radish features/ --junit-xml=allure-results/junit.xml
 radish features/ --listener listeners/radish_allure_listener.py
 
 allure generate allure-results --clean -o allure-report; allure open allure-report
+=======
+cucumber report
+radish features/ --cucumber-json=cucumber.json
+python generate_report.py
+start cucumber_report.html
 
+most importent
+python -c "import listeners.radish_hooks"
+
+===========
+3️⃣ How to run tests
+
+Step 1: Import hooks (registers them automatically):
+
+python -c "import listeners.radish_hooks"
+
+
+Step 2: Run Radish tests as usual:
+
+radish features --cucumber-json=reports/cucumber.json
+
+
+🔹 Make sure reports/ exists to avoid file errors:
+
+mkdir reports
+
+4️⃣ Optional: run_radish.ps1 (Windows) or run_radish.sh (Linux/Mac)
+# PowerShell script
+$env:PYTHONPATH="."  # ensure Python can find listeners module
+python -c "import listeners.radish_hooks"
+radish features --cucumber-json=reports/cucumber.json
+
+
+Then just run:
+
+.\run_radish.ps1

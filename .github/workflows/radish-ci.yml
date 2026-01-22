@@ -56,8 +56,6 @@ jobs:
           --listener listeners.radish_allure_listener \
           --listener listeners.radish_hooks \
           --listener listeners.allure_tag_listener \
-          --listener listeners.allure_environment_listener
-
 
       # 6️⃣ Install Allure CLI
       - name: Install Allure CLI

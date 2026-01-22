@@ -1,1 +1,1 @@
-[{"uid":"950db38462470fb1","name":"Verify homepage title","time":{"duration":9299},"status":"passed","severity":"normal"},{"uid":"e1bf2c6eb095af71","name":"Successful login with valid credentials","time":{"duration":9493},"status":"passed","severity":"normal"}]
+[{"uid":"acf9030cb187c6f6","name":"Successful login with valid credentials","time":{"duration":10687},"status":"passed","severity":"normal"},{"uid":"f8f9a92d4d8bf669","name":"Verify homepage title","time":{"duration":17098},"status":"passed","severity":"normal"}]

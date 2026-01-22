@@ -18,6 +18,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Debug feature folder existence
+      - name: Debug feature folder
+        run: |
+          if [ -d "./features" ]; then
+            echo "features folder exists"
+          else
+            echo "features folder NOT found"
+            exit 1
+          fi
+
       # ------------------------------
       # 2️⃣ Setup Python
       # ------------------------------

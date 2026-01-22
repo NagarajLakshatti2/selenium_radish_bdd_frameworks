@@ -45,14 +45,15 @@ jobs:
         run: radish features/ --listener listeners.radish_allure_listener
 
       # 5️⃣ Run Radish tests (✅ CORRECT WAY)
-      - name: Run Radish BDD tests
+      - name: Run Radish tests
         run: |
-          radish features/
-          --listener listeners.radish_allure_listener \
-          --listener listeners.radish_hooks \
-          --listener listeners.allure_tag_listener \
-          --junit-xml=allure-results/junit.xml \
-          --cucumber-json=allure-results/cucumber.json
+          radish features \
+            --listener listeners.radish_allure_listener \
+            --junit-xml=allure-results/junit.xml \
+            --cucumber-json=allure-results/cucumber.json
+        env:
+          GRID_URL: http://selenium:4444/wd/hub
+
 
       # 6️⃣ Install Allure CLI
       - name: Install Allure CLI

@@ -14,7 +14,7 @@
                         "line": 5,
                         "name": "Given I open Rahul Shetty Academy homepage",
                         "result": {
-                            "duration": 5005932000,
+                            "duration": 4181408000,
                             "status": "passed"
                         }
                     },
@@ -23,7 +23,7 @@
                         "line": 6,
                         "name": "Then page title should contain \"Rahul Shetty Academy\"",
                         "result": {
-                            "duration": 70407000,
+                            "duration": 44245000,
                             "status": "passed"
                         }
                     }
@@ -68,7 +68,7 @@
                         "line": 9,
                         "name": "Given I open the login page",
                         "result": {
-                            "duration": 5016231000,
+                            "duration": 3971919000,
                             "status": "passed"
                         }
                     },
@@ -77,7 +77,7 @@
                         "line": 13,
                         "name": "When I enter username \"rahulshettyacademy\"",
                         "result": {
-                            "duration": 423673000,
+                            "duration": 405534000,
                             "status": "passed"
                         }
                     },
@@ -86,7 +86,7 @@
                         "line": 14,
                         "name": "And I enter password \"Learning@830$3mK2\"",
                         "result": {
-                            "duration": 546880000,
+                            "duration": 353053000,
                             "status": "passed"
                         }
                     },
@@ -95,7 +95,7 @@
                         "line": 15,
                         "name": "And I click on the sign in button",
                         "result": {
-                            "duration": 376565000,
+                            "duration": 258363999,
                             "status": "passed"
                         }
                     }

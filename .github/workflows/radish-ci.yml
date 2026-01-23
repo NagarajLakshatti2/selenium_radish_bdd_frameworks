@@ -115,6 +115,10 @@ jobs:
           name: allure-results
           path: allure-results
 
+      - name: Verify cucumber JSON
+        run: |
+          ls -la allure-results
+
       # ------------------------------
       # 7️⃣ Deploy Allure Report to GitHub Pages
       # ------------------------------
@@ -134,4 +138,4 @@ jobs:
       - name: Show Allure Report URL
         run: |
           echo "✅ Allure report:"
-          echo "https://${{ github.repository_owner }}.github.io/selenium_radish_bdd_frameworks/"
+          echo "https://${{ github.repository_owner }}.github.io/selenium_radish_bdd_frameworks/allure/"

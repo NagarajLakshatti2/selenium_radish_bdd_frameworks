@@ -1,0 +1,86 @@
+gpg --list-secret-keys --keyid-format=long
+
+exist config
+gpg --list-secret-keys --keyid-format=long
+output like this
+[keyboxd]
+---------
+sec ed25519/7A18AAFDC7F200ED 2026-01-21 [SC] [expires: 2029-01-21]
+76D4DF3FBA22515F589934357A18AAFDC7F200ED
+uid [ultimate] Nagaraj Lakshatti <nagaraj.lakshatti11@gmail.com>
+ssb cv25519/52B38F04ABD6A591 2026-01-21 [E] [expires: 2029-01-21]
+B827B070EBFD18BE805D107052B38F04ABD6A591
+=========
+
+git config --global user.signingkey 7A18AAFDC7F200ED
+git config --global commit.gpgsign true
+git config --global gpg.program "C:/Program Files/Git/usr/bin/gpg.exe"
+
+git config --global --list | findstr signing
+output
+user.signingkey=7A18AAFDC7F200ED
+expected
+user.signingkey=7A18AAFDC7F200ED
+commit.gpgsign=true
+
+✅ 2️⃣ Fix the Windows pinentry issue (THIS is why it reappears)
+
+Git for Windows ships its own pinentry.exe.
+If GPG can’t find it, signing randomly fails.
+
+Create / edit this file:
+notepad $env:USERPROFILE\.gnupg\gpg-agent.conf
+
+
+Paste exactly:
+
+default-cache-ttl 34560000
+max-cache-ttl 34560000
+pinentry-program "C:/Program Files/Git/usr/bin/pinentry.exe"
+
+✅ 3️⃣ Restart GPG agent (mandatory)
+gpgconf --kill gpg-agent
+gpgconf --launch gpg-agent
+
+
+✅ 4️⃣ Fix PowerShell environment (VERY important)
+PowerShell does not automatically set GPG_TTY.
+Run once:
+setx GPG_TTY "tty"
+output
+SUCCESS: Specified value was saved.
+
+Close all PowerShell windows and open a new one.
+Verify:
+echo $env:GPG_TTY
+output
+tty
+
+✅ 5️⃣ Test GPG directly (no Git)
+"test" | gpg --clearsign
+✔️ You should be asked for your passphrase once
+✔️ After that, it should work silently for months
+output
+it ask gpg key
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+﻿test
+-----BEGIN PGP SIGNATURE-----
+
+iJEEARYKADkWIQR21N8/uiJRX1iZNDV6GKr9x/IA7QUCaXNcyRsUgAAAAAAEAA5t
+YW51MiwyLjUrMS4xMSwyLDEACgkQehiq/cfyAO2OIAEAtkLvq6Mfon8K0XSTuFEv
+viEOhIhwJsGjrKuAU/rbsSABANwZbkcp1eIuamWtxJd8+vsOo78X+AjQKB9h/DTS
+CCMN
+=b4X1
+-----END PGP SIGNATURE-----
+
+✅ 6️⃣ Final Git test (this should NEVER fail again)
+git commit --allow-empty -m "Permanent GPG signing test"
+
+
+Verify:
+git log --show-signature -1
+You must see:
+gpg: Good signature from "Nagaraj Lakshatti <nagaraj.lakshatti11@gmail.com>"

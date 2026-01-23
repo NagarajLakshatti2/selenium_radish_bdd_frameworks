@@ -1,20 +1,48 @@
 # listeners/radish_hooks.py
+import datetime
+import shutil
+
 from radish import before, after
 import os
 import base64
 import allure
 
+class RadishHooks():
+    def __init__(self):
+        pass
 # ------------------------------
 # 1️⃣ Write Allure environment
 # ------------------------------
 @before.all
 def write_allure_environment(features):
-    os.makedirs("allure-results", exist_ok=True)
+    allure_dir = "allure-results"
+
+    # 🔥 Clean old results
+    if os.path.exists(allure_dir):
+        shutil.rmtree(allure_dir)
+
+    # ✅ Recreate folder
+    os.makedirs(allure_dir, exist_ok=True)
+
+    # 🕒 Current date & time
+    run_time = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+
+    build_number = (
+            os.getenv("GITHUB_RUN_NUMBER") or
+            os.getenv("BUILD_NUMBER") or
+            os.getenv("BUILD_BUILDNUMBER") or
+            os.getenv("CI_PIPELINE_ID") or
+            "LOCAL"
+    )
+
     with open("allure-results/environment.properties", "w") as f:
+        f.write(f"Author={os.getenv('Author', 'Nagaraj Lakshatti')}\n")
         f.write(f"Browser={os.getenv('BROWSER', 'chrome')}\n")
         f.write("Framework=Radish BDD + Selenium\n")
         f.write(f"CI={os.getenv('CI', 'false')}\n")
         f.write(f"GridURL={os.getenv('GRID_URL', 'local')}\n")
+        f.write(f"DD-MM-YY H:M:S= {run_time}\n")
+        f.write(f"Build_Number={build_number}\n")
 
 # ------------------------------
 # 2️⃣ Apply Allure labels based on scenario tags
@@ -54,6 +82,37 @@ def attach_screenshot(step):
             img_base64 = base64.b64encode(f.read()).decode("utf-8")
         step.attach(img_base64, "image/png", step.name)
 
+@after.each_step
+def attach_screenshot_on_failure(step):
+    driver = getattr(step.context, "driver", None)
+
+    if not driver or step.state != "failed":
+        return
+
+    # 📂 Ensure screenshots folder
+    screenshot_dir = "allure-results/screenshots"
+    os.makedirs(screenshot_dir, exist_ok=True)
+
+    # 🕒 Timestamp
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    # 🧾 Clean step name
+    step_name = step.sentence.replace(" ", "_").replace("/", "_")
+
+    # 📸 Screenshot path
+    screenshot_path = f"{screenshot_dir}/{step_name}_{timestamp}.png"
+
+    # Save screenshot
+    driver.save_screenshot(screenshot_path)
+
+    # 📎 Attach to Allure
+    with open(screenshot_path, "rb") as image:
+        allure.attach(
+            image.read(),
+            name=f"{step.sentence} ({timestamp})",
+            attachment_type=allure.attachment_type.PNG
+        )
+
 # ------------------------------
 # 4️⃣ Retry failed scenarios
 # ------------------------------
@@ -71,3 +130,6 @@ def retry_failed_scenario(scenario):
         scenario.context.retries = retries + 1
         # Mark scenario to be re-executed
         scenario.state = scenario.State.UNTESTED
+
+# Register the listener
+RadishHooks()

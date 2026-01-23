@@ -58,6 +58,12 @@ jobs:
           mkdir -p allure-results/screenshots
           radish features \
           --cucumber-json=allure-results/cucumber.json
+        continue-on-error: true   # <--- important
+
+      - name: Create status badge
+        run: |
+          mkdir -p badge
+          echo '{ "schemaVersion": 1, "label": "Allure", "message": "Report", "color": "blue" }' > badge/allure.json
 
         env:
           GRID_URL: http://selenium:4444/wd/hub
@@ -77,11 +83,36 @@ jobs:
       # ------------------------------
       - name: Generate Allure Report
         run: |
+          if [ -d allure-report/history ]; then
+            cp -r allure-report/history allure-results/history
+          fi
           allure generate allure-results --clean -o allure-report
+
+      - name: Fail if tests failed
+        if: steps.radish.outcome == 'failure'
+        run: exit 1
+
+      - name: Notify Slack
+        if: always()
+        run: |
+         curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"🧪 Allure report ready 👉 https://<username>.github.io/<repo>/allure"}' \
+          ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Verify Allure Report
         run: |
           ls -la allure-report
+
+      - name: Upload allure-results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
 
       # ------------------------------
       # 7️⃣ Deploy Allure Report to GitHub Pages
@@ -91,7 +122,9 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
           publish_dir: allure-report
+          destination_dir: allure
           force_orphan: true
 
       # ------------------------------

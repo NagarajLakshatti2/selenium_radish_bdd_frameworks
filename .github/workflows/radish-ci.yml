@@ -92,12 +92,12 @@ jobs:
         if: steps.radish.outcome == 'failure'
         run: exit 1
 
-      - name: Notify Slack
-        if: always()
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"🧪 Allure report ready 👉 https://NagarajLakshatti2.github.io/selenium_radish_bdd_frameworks/allure"}' \
-          ${{ secrets.SLACK_WEBHOOK }}
+#      - name: Notify Slack
+#        if: always()
+#        run: |
+#          curl -X POST -H 'Content-type: application/json' \
+#          --data '{"text":"🧪 Allure report ready 👉 https://NagarajLakshatti2.github.io/selenium_radish_bdd_frameworks/allure"}' \
+#          ${{ secrets.SLACK_WEBHOOK }}
 
 
       - name: Verify Allure Report

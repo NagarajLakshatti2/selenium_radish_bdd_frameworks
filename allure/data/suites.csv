@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","9846","Successful login with valid credentials","","","passed","","","Login functionality - Rahul Shetty Academy","Login functionality - Rahul Shetty Academy",""
+"","8850","Verify homepage title","","","passed","","","Rahul Shetty Academy Homepage","Rahul Shetty Academy Homepage",""
+"","20552","Login failure with empty credentials","","","failed","","","Login functionality - Rahul Shetty Academy","Login functionality - Rahul Shetty Academy",""
+"","20683","Login failure with invalid password","","","failed","","","Login functionality - Rahul Shetty Academy","Login functionality - Rahul Shetty Academy",""

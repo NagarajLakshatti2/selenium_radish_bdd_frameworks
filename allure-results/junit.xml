@@ -1,9 +1,41 @@
 <?xml version='1.0' encoding='utf-8'?>
-<testsuites time="19.512">
-  <testsuite name="Rahul Shetty Academy Homepage" failures="0" errors="0" skipped="0" tests="1" time="9.396">
-    <testcase classname="Rahul Shetty Academy Homepage" name="Verify homepage title" time="7.228"/>
+<testsuites time="69.131">
+  <testsuite name="Rahul Shetty Academy Homepage" failures="0" errors="0" skipped="0" tests="1" time="11.140">
+    <testcase classname="Rahul Shetty Academy Homepage" name="Verify homepage title" time="8.850"/>
   </testsuite>
-  <testsuite name="Login functionality - Rahul Shetty Academy" failures="0" errors="0" skipped="0" tests="1" time="10.116">
-    <testcase classname="Login functionality - Rahul Shetty Academy" name="Successful login with valid credentials" time="7.955"/>
+  <testsuite name="Login functionality - Rahul Shetty Academy" failures="2" errors="0" skipped="0" tests="3" time="57.991">
+    <testcase classname="Login functionality - Rahul Shetty Academy" name="Successful login with valid credentials" time="9.846"/>
+    <testcase classname="Login functionality - Rahul Shetty Academy" name="Login failure with invalid password" time="20.683">
+      <failure type="AssertionError" message="Then I should see an error message"><![CDATA[Given I open the login page
+When I enter username "rahulshettyacademy"
+And I enter password "wrongPassword"
+And I click on the sign in button
+Then I should see an error message
+
+Traceback (most recent call last):
+  File "C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks\.venv\Lib\site-packages\radish\stepmodel.py", line 118, in run
+    self.definition_func(self, *args)  # pylint: disable=not-callable
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks/radish\steps\login\login_steps.py", line 42, in step_see_error_message
+    assert step.context.login_page.is_error_message_displayed(), "Error message not displayed!"
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: Error message not displayed!
+]]></failure>
+    </testcase>
+    <testcase classname="Login functionality - Rahul Shetty Academy" name="Login failure with empty credentials" time="20.552">
+      <failure type="AssertionError" message="Then I should see an error message"><![CDATA[Given I open the login page
+When I click on the sign in button
+Then I should see an error message
+
+Traceback (most recent call last):
+  File "C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks\.venv\Lib\site-packages\radish\stepmodel.py", line 118, in run
+    self.definition_func(self, *args)  # pylint: disable=not-callable
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\nagar\gitworkspace\selenium_radish_bdd_frameworks/radish\steps\login\login_steps.py", line 42, in step_see_error_message
+    assert step.context.login_page.is_error_message_displayed(), "Error message not displayed!"
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: Error message not displayed!
+]]></failure>
+    </testcase>
   </testsuite>
 </testsuites>

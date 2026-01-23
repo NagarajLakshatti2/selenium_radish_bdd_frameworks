@@ -16,14 +16,14 @@ Feature: Login functionality - Rahul Shetty Academy
 #    Then I should be logged in successfully
 #    And I should see the home page
 
-#  @regression @negative
-#  Scenario: Login failure with invalid password
-#    When I enter username "rahulshettyacademy"
-#    And I enter password "wrongPassword"
-#    And I click on the sign in button
-#    Then I should see an error message
+  @regression @negative
+  Scenario: Login failure with invalid password
+    When I enter username "rahulshettyacademy"
+    And I enter password "wrongPassword"
+    And I click on the sign in button
+    Then I should see an error message
 #
-#  @regression @negative
-#  Scenario: Login failure with empty credentials
-#    When I click on the sign in button
-#    Then I should see an error message
+  @regression @negative
+  Scenario: Login failure with empty credentials
+    When I click on the sign in button
+    Then I should see an error message

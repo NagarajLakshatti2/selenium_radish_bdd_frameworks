@@ -99,4 +99,5 @@ jobs:
       # ------------------------------
       - name: Show Allure Report URL
         run: |
-          echo "✅ Allure report: https://${{ github.repository_owner }}.github.io/${{ github.repository }}/index.html"
+          echo "✅ Allure report:"
+          echo "https://${{ github.repository_owner }}.github.io/selenium_radish_bdd_frameworks/"

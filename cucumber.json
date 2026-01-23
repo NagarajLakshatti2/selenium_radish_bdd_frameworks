@@ -14,8 +14,8 @@
                         "line": 5,
                         "name": "Given I open Rahul Shetty Academy homepage",
                         "result": {
-                            "duration": 6966867000,
-                            "status": "passed"
+                            "duration": 0,
+                            "status": "pending"
                         }
                     },
                     {
@@ -23,8 +23,8 @@
                         "line": 6,
                         "name": "Then page title should contain \"Rahul Shetty Academy\"",
                         "result": {
-                            "duration": 43132000,
-                            "status": "passed"
+                            "duration": 0,
+                            "status": "pending"
                         }
                     }
                 ],
@@ -51,7 +51,7 @@
         "name": "Rahul Shetty Academy Homepage",
         "tags": [],
         "type": "feature",
-        "uri": "features/homepage.feature"
+        "uri": "features\\homepage.feature"
     },
     {
         "description": "As a registered user\nI want to log in to Rahul Shetty Academy practice site\nSo that I can access the application successfully",
@@ -68,8 +68,8 @@
                         "line": 9,
                         "name": "Given I open the login page",
                         "result": {
-                            "duration": 4052263000,
-                            "status": "passed"
+                            "duration": 0,
+                            "status": "pending"
                         }
                     },
                     {
@@ -77,8 +77,8 @@
                         "line": 13,
                         "name": "When I enter username \"rahulshettyacademy\"",
                         "result": {
-                            "duration": 178717000,
-                            "status": "passed"
+                            "duration": 0,
+                            "status": "pending"
                         }
                     },
                     {
@@ -86,8 +86,8 @@
                         "line": 14,
                         "name": "And I enter password \"Learning@830$3mK2\"",
                         "result": {
-                            "duration": 187113000,
-                            "status": "passed"
+                            "duration": 0,
+                            "status": "pending"
                         }
                     },
                     {
@@ -95,8 +95,8 @@
                         "line": 15,
                         "name": "And I click on the sign in button",
                         "result": {
-                            "duration": 224263000,
-                            "status": "passed"
+                            "duration": 0,
+                            "status": "pending"
                         }
                     }
                 ],
@@ -115,6 +115,118 @@
                     }
                 ],
                 "type": "scenario"
+            },
+            {
+                "description": "",
+                "id": "2",
+                "keyword": "Scenario",
+                "line": 20,
+                "name": "Login failure with invalid password",
+                "steps": [
+                    {
+                        "keyword": "Given",
+                        "line": 9,
+                        "name": "Given I open the login page",
+                        "result": {
+                            "duration": 0,
+                            "status": "pending"
+                        }
+                    },
+                    {
+                        "keyword": "When",
+                        "line": 21,
+                        "name": "When I enter username \"rahulshettyacademy\"",
+                        "result": {
+                            "duration": 0,
+                            "status": "pending"
+                        }
+                    },
+                    {
+                        "keyword": "And",
+                        "line": 22,
+                        "name": "And I enter password \"wrongPassword\"",
+                        "result": {
+                            "duration": 0,
+                            "status": "pending"
+                        }
+                    },
+                    {
+                        "keyword": "And",
+                        "line": 23,
+                        "name": "And I click on the sign in button",
+                        "result": {
+                            "duration": 0,
+                            "status": "pending"
+                        }
+                    },
+                    {
+                        "keyword": "Then",
+                        "line": 24,
+                        "name": "Then I should see an error message",
+                        "result": {
+                            "duration": 0,
+                            "status": "pending"
+                        }
+                    }
+                ],
+                "tags": [
+                    {
+                        "line": 18,
+                        "name": "@regression"
+                    },
+                    {
+                        "line": 19,
+                        "name": "@negative"
+                    }
+                ],
+                "type": "scenario"
+            },
+            {
+                "description": "",
+                "id": "3",
+                "keyword": "Scenario",
+                "line": 27,
+                "name": "Login failure with empty credentials",
+                "steps": [
+                    {
+                        "keyword": "Given",
+                        "line": 9,
+                        "name": "Given I open the login page",
+                        "result": {
+                            "duration": 0,
+                            "status": "pending"
+                        }
+                    },
+                    {
+                        "keyword": "When",
+                        "line": 28,
+                        "name": "When I click on the sign in button",
+                        "result": {
+                            "duration": 0,
+                            "status": "pending"
+                        }
+                    },
+                    {
+                        "keyword": "Then",
+                        "line": 29,
+                        "name": "Then I should see an error message",
+                        "result": {
+                            "duration": 0,
+                            "status": "pending"
+                        }
+                    }
+                ],
+                "tags": [
+                    {
+                        "line": 25,
+                        "name": "@regression"
+                    },
+                    {
+                        "line": 26,
+                        "name": "@negative"
+                    }
+                ],
+                "type": "scenario"
             }
         ],
         "id": "2",
@@ -123,6 +235,6 @@
         "name": "Login functionality - Rahul Shetty Academy",
         "tags": [],
         "type": "feature",
-        "uri": "features/loginpage.feature"
+        "uri": "features\\loginpage.feature"
     }
 ]

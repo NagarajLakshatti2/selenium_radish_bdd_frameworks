@@ -22,7 +22,7 @@ def run_radish_tests():
         sys.executable,
         "-c",
         (
-            "import listeners.radish_allure_listener;"
+            "import listeners.radish_hooks;"
             "from radish import main;"
             f"main.main(['{FEATURES_DIR}', '--junit-xml={ALLURE_RESULTS}/junit.xml'])"
         )
